@@ -1,0 +1,21 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
+class payment extends Model
+{
+    protected $fillable=['payer_id','indebted_id','status'];
+
+    public function user(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class);
+    }
+    public function depense(): BelongsTo
+    {
+        return $this->belongsTo(Depense::class);
+    }
+}

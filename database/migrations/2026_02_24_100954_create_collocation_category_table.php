@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('collocations', function (Blueprint $table) {
+        Schema::create('collocation_category', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string("title");
-            $table->string("desc",1000);
+            $table->foreignId('collocation_id')->unique()->constrained();
+            $table->foreignId('category_id')->unique()->constrained();
         });
     }
 
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('collocations');
+        Schema::dropIfExists('collocation_category');
     }
 };

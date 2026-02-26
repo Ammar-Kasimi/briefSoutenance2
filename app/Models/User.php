@@ -3,7 +3,11 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Faker\Provider\Payment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -11,14 +15,32 @@ class User extends Authenticatable
 {
    
     use HasFactory, Notifiable;
+    public function role():BelongsTo
+    {
+        return $this->belongsTo(Role::class);
+    }
+    public function collocations():BelongsTo
+    {
+        return $this->belongsTo(Collocation::class);
+    }
+    public function depenses():HasMany
+    {
+        return $this->hasMany(Depense::class);
+    }
+    public function payments():HasMany
+    {
+        return $this->hasMany(Payment::class);
+    }
+
 
    
     protected $fillable = [
         'username',
         'email',
         'password',
-        'img',
-        'role'
+        'pic',
+        'isOwner',
+        'isActive'
     ];
 
     
@@ -35,4 +57,5 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    // public function role():belongsTO
 }

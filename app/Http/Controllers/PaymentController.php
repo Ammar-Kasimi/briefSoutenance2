@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Collocation;
+use App\Models\payment;
 use Illuminate\Http\Request;
 
-class CollocationController extends Controller
+class PaymentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,30 +18,31 @@ class CollocationController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create() {}
+    public function create()
+    {
+        //
+    }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        Collocation::create($request->validate(['title' => 'string|required','desc'=>'max:999']));
-        return redirect()->route('');
+        //
     }
-
 
     /**
      * Display the specified resource.
      */
-    public function show(Collocation $collocation)
+    public function show(payment $payment)
     {
-        return view('Collocation.show',compact('collocation'));
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Collocation $collocation)
+    public function edit(payment $payment)
     {
         //
     }
@@ -49,17 +50,16 @@ class CollocationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Collocation $collocation)
+    public function update(Request $request, payment $payment)
     {
-        
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Collocation $collocation)
+    public function destroy(payment $payment)
     {
-        $collocation->delete();
-        return redirect()->route('dashbord')
+        //
     }
 }

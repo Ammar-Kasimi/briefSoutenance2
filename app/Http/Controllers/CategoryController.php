@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\category;
+use App\Models\Collocation;
 
-class categoryController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Collocation $collocation)
     {
         $categories = Category::all();
         return view('categories.index', compact('categories'));
@@ -19,15 +20,15 @@ class categoryController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Collocation $collocation)
     {
-        return redirect()->route('categories.create');
+        return view('categories.create',compact('collocation'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request,Collocation $collocation)
     {   
 
         Category::create($request->validate(['name'=>'required|string|max:20']));
@@ -37,9 +38,9 @@ class categoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(Category $category)
     {
-        $category = Category::find($id);
+        // $category = Category::find($id);
         return view('categories.show', compact('category'));
     }
 
@@ -58,7 +59,6 @@ class categoryController extends Controller
     public function update(Request $request,  Category $category)
     {
         $validated = $request->validate(['name=>required|string|max:20']);
-        $validated['completed'] = $request->has('completed');
 
         $category->update($validated);
         return redirect()->route('categories.index');
@@ -70,7 +70,6 @@ class categoryController extends Controller
     public function destroy(Category $category)
     {
         $category->delete();
-        die("blablabala");
         return redirect()->route('categories.index');
     }
 }

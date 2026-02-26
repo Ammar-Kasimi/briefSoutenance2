@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('depense_user', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('payer_id')->unique()->constrained('users');
+            $table->foreignId('indebted_id')->unique()->constrained('users');
+            $table->foreignId('collocation_id')->unique()->constrained();
             $table->timestamps();
         });
     }
@@ -22,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('depense_users');
+        Schema::dropIfExists('payments');
     }
 };

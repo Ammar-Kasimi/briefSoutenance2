@@ -19,8 +19,9 @@ return new class extends Migration
             $table->string('password', 1000);
             $table->boolean("isActive")->default(true);
             $table->boolean("isOwner")->default(false);
-            $table->foreignId('collocation_id')->constrained();
-            $table->foreignId('role_id')->constrained();
+            $table->foreignId('collocation_id')->unique()->constrained();
+            $table->foreignId('role_id')->unique()->constrained();
+            $table->string('pic',1000);
             $table->rememberToken();
             $table->timestamps();
         });

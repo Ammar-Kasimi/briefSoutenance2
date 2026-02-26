@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('collocation_category', function (Blueprint $table) {
+        Schema::create('category_collocation', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->foreignId('collocation_id')->unique()->constrained();
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('collocation_category');
+        Schema::dropIfExists('category_collocation');
     }
 };

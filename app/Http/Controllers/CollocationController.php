@@ -25,8 +25,8 @@ class CollocationController extends Controller
      */
     public function store(Request $request)
     {
-        Collocation::create($request->validate(['title' => 'string|required','desc'=>'max:999']));
-        return redirect()->route('');
+
+        return redirect()->route('collocation.show', Collocation::create($request->validate(['title' => 'string|required', 'desc' => 'max:999'])));
     }
 
 
@@ -35,23 +35,22 @@ class CollocationController extends Controller
      */
     public function show(Collocation $collocation)
     {
-        return view('Collocation.show',compact('collocation'));
+        $collocation->load('depenses', 'categories', 'members');
+        return view('collocations.show', compact('collocation'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Collocation $collocation)
-    {
-        //
+    public function edit(Collocation $collocation) {
+        return view('collocation.edit',compact('collocation'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+ 
     public function update(Request $request, Collocation $collocation)
     {
-        
+        $collocation->update($request->validate(['title' => 'string|required', 'desc' => 'max:999']));
+        return redirect()->route('colocation.show', $collocation);
     }
 
     /**
@@ -60,6 +59,9 @@ class CollocationController extends Controller
     public function destroy(Collocation $collocation)
     {
         $collocation->delete();
-        return redirect()->route('dashbord')
+        $collocation->depenses()->delete();
+        $collocation->categories()->delete();
+        $collocation->members()->detach();
+        return view('dashboard');
     }
 }

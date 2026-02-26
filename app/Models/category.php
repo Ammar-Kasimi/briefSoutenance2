@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Category extends Model
@@ -14,8 +14,8 @@ class Category extends Model
     {
         return $this->hasMany(Depense::class);
     }
-     public function collocations(): BelongsToMany
+     public function collocations(): BelongsTo
     {
-        return $this->belongToMany(Collocation::class);
+        return $this->belongTo(Collocation::class);
     }
 }

@@ -10,9 +10,9 @@ class payment extends Model
 {
     protected $fillable=['payer_id','indebted_id','status'];
 
-    public function user(): BelongsToMany
+    public function user(): BelongsTo
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsTo(User::class);
     }
     public function depense(): BelongsTo
     {

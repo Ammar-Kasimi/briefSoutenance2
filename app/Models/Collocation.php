@@ -11,9 +11,9 @@ class Collocation extends Model
 {
     protected $fillable = ['title', 'desc'];
 
-    public function categories(): BelongsToMany
+    public function categories(): HasMany
     {
-        return $this->belongsToMany(Category::class);
+        return $this->hasMany(Category::class);
     }
     public function depenses(): HasMany
     {

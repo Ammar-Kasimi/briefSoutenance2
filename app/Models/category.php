@@ -14,8 +14,8 @@ class Category extends Model
     {
         return $this->hasMany(Depense::class);
     }
-     public function collocations(): BelongsTo
+     public function collocation(): BelongsTo
     {
-        return $this->belongTo(Collocation::class);
+        return $this->belongsTo(Collocation::class);
     }
 }

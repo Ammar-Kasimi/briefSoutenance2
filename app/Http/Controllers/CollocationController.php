@@ -25,7 +25,7 @@ class CollocationController extends Controller
      */
     public function store(Request $request)
     {
-
+    
         return redirect()->route('collocation.show', Collocation::create($request->validate(['title' => 'string|required', 'desc' => 'max:999'])));
     }
 

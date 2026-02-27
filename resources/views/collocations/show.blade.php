@@ -25,7 +25,7 @@
         <div class="flex flex-col md:flex-row justify-between items-center mb-8">
             <h1 class="text-2xl font-bold mb-4 md:mb-0"></h1>
             <div class="flex space-x-2">
-                <a href="{{route('collocations.categories.index',$c}}" class="bg-blue-500 text-white px-4 py-2 rounded font-medium hover:bg-blue-600 transition">Catégories</a>
+                <a href="{{route('collocations.categories.index',$collocation)}}" class="bg-blue-500 text-white px-4 py-2 rounded font-medium hover:bg-blue-600 transition">Catégories</a>
                 <a href="" class="bg-gray-600 text-white px-4 py-2 rounded font-medium hover:bg-gray-700 transition">Paramètres</a>
                 <form action="" method="">
                     @csrf
@@ -89,9 +89,12 @@
                         <input type="text" name="" required placeholder="Titre (ex: Courses)" class="border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
                         <input type="number" step="0.01" min="0" name="" required placeholder="Montant" class="border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
                         <input type="date" name="" required class="border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        <select name="" required class="border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            <option value="">Choisir une catégorie</option>
-                            <option value=""></option>
+                        <select name="" placeholder="choose a category" required class="border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        
+                        @foreach($collocation->categories as $category)
+                            <option value="{{$category->name}}">{{$category->name}}</option>
+                            @endforeach
+                            <option disabled selected hidden>choose a category</option>   
                         </select>
                         <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded font-semibold md:col-span-2 hover:bg-blue-700 transition">Enregistrer la dépense</button>
                     </form>

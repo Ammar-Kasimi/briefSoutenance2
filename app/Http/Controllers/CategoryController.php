@@ -14,7 +14,7 @@ class CategoryController extends Controller
     public function index(Collocation $collocation)
     {
         $categories = $collocation->categories;
-        return view('collocations.categories.index', compact('categories','collocation'));
+        return view('categories.index', compact('categories','collocation'));
     }
 
     /**
@@ -30,6 +30,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request,Collocation $collocation)
     {   
+        
         $collocation->categories()->create($request->validate(['name'=>'required|string|max:20']));
         return redirect()->route('collocations.categories.index',$collocation);
     }

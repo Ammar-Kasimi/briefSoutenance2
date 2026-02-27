@@ -11,7 +11,7 @@
         <div class="container mx-auto flex justify-between items-center">
             <a href="" class="text-xl font-bold">EasyColoc</a>
             <div class="flex space-x-4">
-                <a href="" class="font-medium">Retour à la Colocation</a>
+                <a href="{{route('collocation.show',$collocation)}}" class="font-medium">Retour à la Colocation</a>
             </div>
         </div>
     </nav>
@@ -19,9 +19,10 @@
         <h1 class="text-2xl font-bold mb-6">Gestion des Catégories</h1>
         <div class="bg-white p-6 rounded shadow mb-8">
             <h2 class="text-xl font-semibold mb-4 border-b pb-2">Ajouter une Catégorie</h2>
-            <form action="" method="" class="flex flex-col md:flex-row gap-4">
+            <form action="{{route('collocations.categories.store',$collocation)}}" method="POST" class="flex flex-col md:flex-row gap-4">
                 @csrf
-                <input type="text" name="" required placeholder="Nom de la catégorie" class="flex-grow border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                @method('post')
+                <input type="text" name="name" required placeholder="Nom de la catégorie" class="flex-grow border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
                 <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded font-semibold hover:bg-blue-700 transition">Ajouter</button>
             </form>
         </div>
@@ -36,16 +37,19 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach($categories as $category)
                         <tr class="hover:bg-gray-50 transition border-b">
-                            <td class="p-3 text-gray-800 font-medium">{{-- --}}</td>
+                            <td class="p-3 text-gray-800 font-medium">{{$category->name}}</td>
                             <td class="p-3 flex space-x-2">
                                 <a href="" class="bg-yellow-500 text-white px-3 py-1 rounded text-sm hover:bg-yellow-600 transition">Éditer</a>
-                                <form action="" method="">
+                                <form action="{{route('categories.destroy',$category)}}" method="POST">
                                     @csrf
+                                    @method('DELETE')
                                     <button type="submit" class="bg-red-600 text-white px-3 py-1 rounded text-sm hover:bg-red-700 transition">Suppr.</button>
                                 </form>
                             </td>
                         </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

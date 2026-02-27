@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\category;
+use App\Models\Category;
 use App\Models\Collocation;
 
 class CategoryController extends Controller
@@ -13,36 +13,35 @@ class CategoryController extends Controller
      */
     public function index(Collocation $collocation)
     {
-        $categories = Category::all();
-        return view('categories.index', compact('categories'));
+        $categories = $collocation->categories;
+        return view('collocations.categories.index', compact('categories','collocation'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Collocation $collocation)
-    {
-        return view('categories.create',compact('collocation'));
-    }
+    // public function create(Collocation $collocation)
+    // {
+    //     return view('categories.create',compact('collocation'));
+    // }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request,Collocation $collocation)
     {   
-
-        Category::create($request->validate(['name'=>'required|string|max:20']));
-        return redirect()->route('categories.index');
+        $collocation->categories()->create($request->validate(['name'=>'required|string|max:20']));
+        return redirect()->route('collocations.categories.index',$collocation);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Category $category)
-    {
-        // $category = Category::find($id);
-        return view('categories.show', compact('category'));
-    }
+    // public function show(Category $category)
+    // {
+    //     // $category = Category::find($id);
+    //     return view('categories.show', compact('category'));
+    // }
 
     /**
      * Show the form for editing the specified resource.
@@ -50,7 +49,7 @@ class CategoryController extends Controller
     public function edit(Category $category)
     {
 
-        return view('categories.edit', compact('category'));
+        return view('collocation.categories.edit', compact('category'));
     }
 
     /**
@@ -58,18 +57,19 @@ class CategoryController extends Controller
      */
     public function update(Request $request,  Category $category)
     {
-        $validated = $request->validate(['name=>required|string|max:20']);
+        $validated = $request->validate(['name'=>'required|string|max:20']);
 
         $category->update($validated);
-        return redirect()->route('categories.index');
+        return redirect()->route('collocations.categories.index',$category->collocation);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy()
+    public function destroy(Category $category)
     {
+        $collocation=$category->collocation;
         $category->delete();
-        return redirect()->route('categories.index');
+        return redirect()->route('collocations.categories.index',$collocation);
     }
 }

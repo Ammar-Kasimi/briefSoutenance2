@@ -25,7 +25,7 @@
         <div class="flex flex-col md:flex-row justify-between items-center mb-8">
             <h1 class="text-2xl font-bold mb-4 md:mb-0"></h1>
             <div class="flex space-x-2">
-                <a href="" class="bg-blue-500 text-white px-4 py-2 rounded font-medium hover:bg-blue-600 transition">Catégories</a>
+                <a href="{{route('collocations.categories.index',$c}}" class="bg-blue-500 text-white px-4 py-2 rounded font-medium hover:bg-blue-600 transition">Catégories</a>
                 <a href="" class="bg-gray-600 text-white px-4 py-2 rounded font-medium hover:bg-gray-700 transition">Paramètres</a>
                 <form action="" method="">
                     @csrf

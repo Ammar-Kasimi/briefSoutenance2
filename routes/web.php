@@ -17,9 +17,9 @@ Route::get('/', function () {
 // Route::resource('users',UserController::class);
 // Route::resource('categories', CategoryController::class);
 
-Route::resource('collocation.depense',DepenseController::class)->shallow();
+Route::resource('collocations.depense',DepenseController::class)->shallow();
 Route::resource('collocation',CollocationController::class);
-Route::resource('collocation.categories',CategoryController::class)->shallow();
+Route::resource('collocations.categories',CategoryController::class)->shallow();
 Route::resource('Role.users',CategoryController::class)->shallow();
 Route::resource('Depense.users',CategoryController::class)->shallow();
 Route::get('/dashboard',function(){

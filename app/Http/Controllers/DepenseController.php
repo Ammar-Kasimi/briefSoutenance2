@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Depense;
+use App\Models\payment;
 use App\Models\Collocation;
 
 class DepenseController extends Controller
@@ -34,8 +35,10 @@ class DepenseController extends Controller
         $validated=$request->validate(['title'=>'required|string|min:4','total'=>'gt:0|required','category_id'=>'required|int']);
         $validated['user_id']=1;
         $dep=$collocation->depenses()->create($validated);
-       foreach($collocation->members as $member){
-            Payment::create(['payer_id'=>$dep->]);
+       
+        $arr = $collocation->members->where('id', '!=', $validated['user_id']);
+       foreach($arr as $member){
+            Payment::create(['payer_id'=>$validated['user_id'],'indebted_id'=>$member->id,'depense_id'=>$dep->id,'amount'=>($dep->total/count($arr))+1]);
         }
         // $request->validate(['payer_id'=>'required|int','indebted_id'=>'required|int','depense_id'=>'required|int','amount'=>'status'])
         // $validated2=

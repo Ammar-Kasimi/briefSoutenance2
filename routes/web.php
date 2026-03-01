@@ -1,7 +1,9 @@
 <?php
 
-use App\Models\category;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+
+use App\Models\category;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CollocationController;
 use App\Http\Controllers\DepenseController;
@@ -17,42 +19,27 @@ Route::get('/', function () {
 // Route::resource('users',UserController::class);
 // Route::resource('categories', CategoryController::class);
 
-Route::resource('collocations.depense',DepenseController::class)->shallow();
+Route::resource('collocations.depenses',DepenseController::class)->shallow();
 Route::resource('collocation',CollocationController::class);
 Route::resource('collocations.categories',CategoryController::class)->shallow();
 Route::resource('Role.users',CategoryController::class)->shallow();
 Route::resource('Depense.users',CategoryController::class)->shallow();
-Route::get('/dashboard',function(){
+Route::get('/home',function(){
+    return view('home');
+});
+
+Route::get('/', function () {
     return view('dashboard');
 });
 
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
 
-// // Main Dashboard (resources/views/dashboard.blade.php)
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->name('dashboard');
-
-// // Colocation Views (resources/views/collocations/...)
-// Route::get('/collocations/show', function () {
-//     return view('collocations.show');
-// })->name('collocations.show');
-
-// Route::get('/collocations/edit', function () {
-//     return view('collocations.edit');
-// })->name('collocations.edit');
-
-// // Category Views (resources/views/categories/...)
-// Route::get('/categories', function () {
-//     return view('categories.index');
-// })->name('categories.index');
-
-// // Invitation Views (resources/views/invitations/...)
-// Route::get('/invitations/accept', function () {
-//     return view('invitations.accept');
-// })->name('invitations.accept');
-
-// // Admin Views (resources/views/admin/...)
-// Route::get('/admin/dashboard', function () {
-//     return view('admin.dashboard');
-// })->name('admin.dashboard');
+require __DIR__.'/auth.php';

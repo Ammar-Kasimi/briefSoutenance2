@@ -29,7 +29,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        User::create($request->validate(['username=>required|string|max:40','password=>required|min:6|string','email=>required|unique:users','role=>string|max:15']));
+        User::create($request->validate(['name=>required|string|max:40','password=>required|min:6|string','email=>required|unique:users','role=>string|max:15']));
         return redirect()->route('users.index');
     }
 
@@ -56,7 +56,7 @@ class UserController extends Controller
      */
     public function update(Request $request,  User $users)
     {
-        $validated = $request->validate(['username=>required|string|max:40','password=>required|min:6|string','email=>required|unique:users','role=>string|max:15']);
+        $validated = $request->validate(['name=>required|string|max:40','password=>required|min:6|string','email=>required|unique:users','role=>string|max:15']);
         $validated['completed'] = $request->has('completed');
 
         $users->update($validated);

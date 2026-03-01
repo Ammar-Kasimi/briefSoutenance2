@@ -84,15 +84,16 @@
             <div class="space-y-8">
                 <div class="bg-white p-6 rounded shadow border-t-4 border-blue-600">
                     <h2 class="text-xl font-semibold mb-4 border-b pb-2">Ajouter une Dépense</h2>
-                    <form action="" method="" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <form action="{{route('collocations.depenses.store',$collocation)}}" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         @csrf
-                        <input type="text" name="" required placeholder="Titre (ex: Courses)" class="border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        <input type="number" step="0.01" min="0" name="" required placeholder="Montant" class="border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        <input type="date" name="" required class="border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        <select name="" placeholder="choose a category" required class="border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        @method('POST')
+                        <input type="text" name="title" required placeholder="Titre (ex: Courses)" class="border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <input type="number" step="0.01" min="0" name="total" required placeholder="Montant" class="border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <input type="date" name=""  class="border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <select name="category_id" placeholder="choose a category" required class="border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
                         
                         @foreach($collocation->categories as $category)
-                            <option value="{{$category->name}}">{{$category->name}}</option>
+                            <option value="{{$category->id}}">{{$category->name}}</option>
                             @endforeach
                             <option disabled selected hidden>choose a category</option>   
                         </select>
@@ -120,15 +121,17 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach($collocation->depenses as $dep)
                                 <tr class="hover:bg-gray-50 transition border-b">
                                     <td class="p-3 text-gray-600 text-sm"></td>
-                                    <td class="p-3 font-bold text-blue-600"></td>
-                                    <td class="p-3 text-gray-600 text-sm"></td>
+                                    <td class="p-3 font-bold text-blue-600">{{$dep->title}}</td>
+                                    <td class="p-3 text-gray-600 text-sm">{{$dep->category->name}}</td>
                                     <td class="p-3">
-                                        <span class="bg-gray-200 text-gray-800 text-xs px-2 py-1 rounded"></span>
+                                        <span class="bg-gray-200 text-gray-800 text-xs px-2 py-1 rounded">{{$dep->user->username}}</span>
                                     </td>
-                                    <td class="p-3 text-gray-800 font-bold text-right"></td>
+                                    <td class="p-3 text-gray-800 font-bold text-right">{{$dep->total}}</td>
                                 </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

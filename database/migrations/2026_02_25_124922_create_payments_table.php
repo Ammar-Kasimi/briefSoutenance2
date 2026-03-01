@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('payer_id')->unique()->constrained('users');
-            $table->foreignId('indebted_id')->unique()->constrained('users');
-            $table->foreignId('collocation_id')->unique()->constrained();
+            $table->foreignId('payer_id')->constrained('users');
+            $table->foreignId('indebted_id')->constrained('users');
+            $table->foreignId('depense_id')->constrained();
+            $table->decimal('amount');
             $table->timestamps();
         });
     }

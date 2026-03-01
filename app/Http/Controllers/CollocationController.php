@@ -25,7 +25,7 @@ class CollocationController extends Controller
      */
     public function store(Request $request)
     {
-    
+
         return redirect()->route('collocation.show', Collocation::create($request->validate(['title' => 'string|required', 'desc' => 'max:999'])));
     }
 
@@ -35,7 +35,7 @@ class CollocationController extends Controller
      */
     public function show(Collocation $collocation)
     {
-        $collocation->load('depenses', 'categories', 'members');
+        $collocation->load('depenses.category', 'categories', 'members');
         return view('collocations.show', compact('collocation'));
     }
 

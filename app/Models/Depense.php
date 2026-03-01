@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Depense extends Model
 
 {
-   protected $fillable=['title','sum'];
+   protected $fillable=['title','total','category_id','user_id'];
    
      public function collocation():BelongsTo
     {
@@ -19,7 +19,7 @@ class Depense extends Model
     {
         return $this->belongsTo(Category::class);
     }
-    public function users():BelongsTo
+    public function user():BelongsTo
     {
         return $this->belongsTo(User::class);
     }

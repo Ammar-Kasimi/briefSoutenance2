@@ -35,7 +35,7 @@ class CollocationController extends Controller
      */
     public function show(Collocation $collocation)
     {
-        $collocation->load('depenses.category', 'categories', 'members');
+        $collocation->load('depenses.category', 'categories', 'members','payments.depense');
         return view('collocations.show', compact('collocation'));
     }
 

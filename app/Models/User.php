@@ -38,9 +38,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'pic',
+        'avatar',
         'isOwner',
-        'isActive'
+        'isActive',
+        'reputation'
     ];
 
     

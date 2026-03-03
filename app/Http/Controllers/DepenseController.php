@@ -33,8 +33,8 @@ class DepenseController extends Controller
     public function store(Request $request,Collocation $collocation)
     {   
         // dd($request->all());
-        $validated=$request->validate(['title'=>'required|string|min:4','total'=>'gt:0|required','category_id'=>'required|int','user_id'=>Auth::id()]);
-        // $validated['user_id']=1;
+        $validated=$request->validate(['title'=>'required|string|min:4','total'=>'gt:0|required','category_id'=>'required|int']);
+        $validated['user_id']=Auth::id();
         
         $dep=$collocation->depenses()->create($validated);
        

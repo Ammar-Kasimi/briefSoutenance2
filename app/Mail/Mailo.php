@@ -7,18 +7,25 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Mail\Mailables\Address;
 use Illuminate\Queue\SerializesModels;
 
 class Mailo extends Mailable
 {
     use Queueable, SerializesModels;
-
+    // protected $fillable['senderEmail','senderName'];
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public $senderName;
+    public $senderEmail;
+    public $inviteUrl;
+
+    public function __construct($a, $b, $c)
     {
-        //
+        $this->senderName = $a;
+        $this->senderEmail = $b;
+        $this->inviteUrl = $c;
     }
 
     /**
@@ -27,7 +34,8 @@ class Mailo extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Mailo',
+            from: new Address($this->senderEmail, $this->senderName),
+            subject: $this->senderName . ' mr7ba bik f collcoation dyalna'
         );
     }
 
@@ -37,7 +45,8 @@ class Mailo extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'invitation.invitation',
+            with:['token' => $this->token]
         );
     }
 

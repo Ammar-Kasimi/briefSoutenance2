@@ -10,7 +10,11 @@ class payment extends Model
 {
     protected $fillable=['payer_id','indebted_id','status','depense_id','amount'];
 
-    public function user(): BelongsTo
+    public function payer(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+    public function indebted(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }

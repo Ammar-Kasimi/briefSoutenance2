@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Collocation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CollocationController extends Controller
 {
@@ -25,7 +26,7 @@ class CollocationController extends Controller
      */
     public function store(Request $request)
     {
-
+        Auth::user()->isOwner=true;
         return redirect()->route('collocation.show', Collocation::create($request->validate(['title' => 'string|required', 'desc' => 'max:999'])));
     }
 
@@ -35,7 +36,7 @@ class CollocationController extends Controller
      */
     public function show(Collocation $collocation)
     {
-        $collocation->load('depenses.category', 'categories', 'members','payments.depense');
+        $collocation->load('depenses.category', 'categories', 'members','payments.indebted','payments.payer');
         return view('collocations.show', compact('collocation'));
     }
 

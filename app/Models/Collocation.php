@@ -23,4 +23,8 @@ class Collocation extends Model
     {
         return $this->hasMany(User::class);
     }
+    public function payments(){
+        return $this->hasManyThrough(Payment::class,depense::class);
+    }
+
 }

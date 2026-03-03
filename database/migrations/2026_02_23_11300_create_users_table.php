@@ -21,6 +21,7 @@ return new class extends Migration
             $table->boolean("isOwner")->default(false);
             $table->foreignId('collocation_id')->nullable()->constrained();
             $table->foreignId('role_id')->nullable()->constrained();
+            $table->integer('reputation')->default(0);
             $table->string('avatar',1000)->nullable();
             $table->rememberToken();
             $table->timestamps();

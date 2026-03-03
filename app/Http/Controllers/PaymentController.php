@@ -58,9 +58,9 @@ class PaymentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(payment $payment)
+    public function destroy(Payment $payment)
     {   
-        $collocation=$payment->depense()->collocation();
+        $collocation=$payment->depense->collocation;
         $payment->delete();
         return redirect()->route('collocation.show',$collocation);
     }

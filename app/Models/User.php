@@ -19,7 +19,7 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class);
     }
-    public function collocations():BelongsTo
+    public function collocation():BelongsTo
     {
         return $this->belongsTo(Collocation::class);
     }

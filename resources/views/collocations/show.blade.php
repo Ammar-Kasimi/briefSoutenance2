@@ -100,8 +100,9 @@
                                 <span class="text-xs text-white bg-blue-500 px-2 py-0.5 rounded ml-2">Reputation: {{ $member->reputation }}</span>
                                 <span class="text-xs text-green-600 font-bold ml-2"></span>
                             </div>
-                            <form action="" method="">
+                            <form action="{{route('collocations.removeMember',$member)}}" method="POST">
                                 @csrf
+                                @method('delete')
                                 <button type="submit" class="text-red-600 text-sm font-semibold hover:underline">Retirer</button>
                             </form>
                         </li>
@@ -128,7 +129,7 @@
                             </div>
                             <div class="flex justify-between items-end mt-2">
                                 <p class="text-2xl font-black text-red-600">{{ $payment->amount }}</p>
-                                <form action="payment.destroy" method="POST">
+                                <form action="{{route('payments.destroy',$payment)}}" method="POST">
                                     @csrf
                                     @method('delete')
                                     <input type="hidden" name="" value="">

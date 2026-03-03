@@ -7,6 +7,7 @@ use App\Models\category;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CollocationController;
 use App\Http\Controllers\DepenseController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostTagController;
 use App\Http\Controllers\UserController;
@@ -22,9 +23,13 @@ Route::middleware('auth')->group(function(){
 Route::resource('collocations.depenses',DepenseController::class)->shallow()->only('store');
 Route::resource('collocation',CollocationController::class);
 Route::resource('collocations.categories',CategoryController::class)->shallow();
-Route::resource('Role.users',CategoryController::class)->shallow();
-Route::resource('Depense.users',CategoryController::class)->shallow();
+Route::resource('useres',UserController::class);
+// Route::resource('Depense.users',r::class)->shallow();
+Route::resource('payments',PaymentController::class);
 });
+
+Route::delete('/members/{user}',[CollocationController::class,'removeMember'])->name('collocations.removeMember');
+
 Route::get('/home',function(){
     return view('home');
 })->middleware('auth');

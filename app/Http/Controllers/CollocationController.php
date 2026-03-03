@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Collocation;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -64,5 +65,11 @@ class CollocationController extends Controller
         $collocation->categories()->delete();
         $collocation->members()->detach();
         return view('dashboard');
+    }
+    public function removeMember(User $user){
+        $collocation=$user->collocation;
+    $user->collocation_id=null;
+    $user->save();
+    return redirect()->route('collocation.show',$collocation);
     }
 }

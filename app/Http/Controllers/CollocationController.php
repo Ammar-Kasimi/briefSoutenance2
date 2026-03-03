@@ -37,6 +37,9 @@ class CollocationController extends Controller
      */
     public function show(Collocation $collocation)
     {
+        if (Auth::user()->collocation_id != $collocation->id){
+            return redirect()->route('dashboard');
+        }
         $collocation->load('depenses.category', 'categories', 'members','payments.indebted','payments.payer');
         return view('collocations.show', compact('collocation'));
     }
@@ -70,6 +73,27 @@ class CollocationController extends Controller
         $collocation=$user->collocation;
     $user->collocation_id=null;
     $user->save();
-    return redirect()->route('collocation.show',$collocation);
+    return $collocation;
+    }
+    public function leaveCollocation(User $user){
+        if($user->payments->count()==0){
+            $user->reputation++;
+        }else{
+            $user->reputation--;
+        }
+        $this->removeMember($user);
+        // $user->collocation->removeMember($user);
+        return redirect()->route('dashboard');
+    }
+    public function kickMember(User $user){
+        // dd('test');
+        if(Auth::user()->isOwner==true){
+            // dd(1);
+            $user->payments()->update(['indebted_id'=>Auth::id()]);
+            Auth::user()->payments()->whereColumn('indebted_id', 'payer_id')->delete();
+            $collocation=$this->removeMember($user);
+            return redirect()->route('collocation.show',$collocation);
+        }
+        return redirect()->route('collocation.show',$user->collocation);
     }
 }

@@ -12,14 +12,14 @@ class payment extends Model
 
     public function payer(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,'payer_id');
     }
     public function indebted(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,'indebted_id');
     }
     public function depense(): BelongsTo
     {
-        return $this->belongsTo(Depense::class);
+        return $this->belongsTo(Depense::class,);
     }
 }

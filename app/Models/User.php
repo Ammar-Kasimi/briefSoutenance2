@@ -4,7 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-use Faker\Provider\Payment;
+use App\models\Payment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -29,7 +29,7 @@ class User extends Authenticatable
     }
     public function payments():HasMany
     {
-        return $this->hasMany(Payment::class);
+        return $this->hasMany(Payment::class,'indebted_id');
     }
 
 

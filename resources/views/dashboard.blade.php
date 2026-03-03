@@ -12,7 +12,8 @@
     <nav class="bg-blue-600 text-white p-4 shadow-md">
         <div class="container mx-auto flex justify-between items-center">
             <a href="" class="text-xl font-bold">EasyColoc</a>
-            <form action="" method="">
+            <form action="{{route('logout')}}" method="POST">
+                @csrf
                 <button type="submit" class="font-medium bg-blue-700 px-3 py-1 rounded">Déconnexion</button>
             </form>
         </div>

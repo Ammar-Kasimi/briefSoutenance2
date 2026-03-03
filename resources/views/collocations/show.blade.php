@@ -14,7 +14,7 @@
                 <a href="" class="font-medium hover:text-gray-200">Dashboard</a>
                 <a href="" class="font-medium hover:text-gray-200">Profil</a>
                 <a href="" class="font-medium text-yellow-300 hover:text-yellow-100"></a>
-                <form action="" method="">
+                <form action="{{route('logout')}}" method="POST">
                     @csrf
                     <button type="submit" class="font-medium bg-blue-700 px-3 py-1 rounded hover:bg-blue-800 transition">Déconnexion</button>
                 </form>
@@ -40,8 +40,9 @@
                     <a href="{{route('collocations.categories.index',$collocation)}}" class="bg-blue-500 text-white px-4 py-2 rounded font-medium hover:bg-blue-600 transition">Catégories</a>
                     <a href="" class="bg-gray-600 text-white px-4 py-2 rounded font-medium hover:bg-gray-700 transition">Paramètres</a>
                 @endif
-                <form action="" method="">
+                <form action="{{route('collocation.leaveCollocation',Auth::id())}}" method="POST">
                     @csrf
+                    @method('delete')
                     <button type="submit" class="bg-yellow-500 text-white px-4 py-2 rounded font-medium hover:bg-yellow-600 transition">Quitter</button>
                 </form>
                 <form action="" method="">
@@ -100,11 +101,15 @@
                                 <span class="text-xs text-white bg-blue-500 px-2 py-0.5 rounded ml-2">Reputation: {{ $member->reputation }}</span>
                                 <span class="text-xs text-green-600 font-bold ml-2"></span>
                             </div>
-                            <form action="{{route('collocations.removeMember',$member)}}" method="POST">
+                            @if($member->id!=Auth::id())
+                            <form action="{{route('collocations.kickMember',$member)}}" method="POST">
                                 @csrf
                                 @method('delete')
                                 <button type="submit" class="text-red-600 text-sm font-semibold hover:underline">Retirer</button>
                             </form>
+                            @else
+                            <span class="text-sm text-green-500 italic">(Owner)</span>
+                            @endif
                         </li>
                         @endforeach
                     </ul>
@@ -120,7 +125,7 @@
                 <div class="bg-white p-6 rounded shadow">
                     <h2 class="text-xl font-semibold mb-4 border-b pb-2">Qui doit à qui</h2>
                     <ul class="space-y-4">
-                        @foreach($collocation->payments as $payment)
+                        @foreach(Auth::user()->payments as $payment)
                         <li class="flex flex-col p-4 border border-gray-200 bg-gray-50 rounded shadow-sm">
                             <div class="flex items-center justify-between mb-2">
                                 <span class="font-bold text-gray-800">{{ $payment->indebted->name }}</span>

@@ -29,7 +29,13 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        User::create($request->validate(['name=>required|string|max:40','password=>required|min:6|string','email=>required|unique:users','role=>string|max:15']));
+        $validated = $request->validate(['name' => 'required|string|max:40', 'password' => 'required|min:6|string', 'email' => 'required|unique:users', 'role' => 'string|max:15']);
+
+        $user = User::create($validated);
+        if (User::count() == 1) {
+            $user->role='admin';
+            $user->save();
+        }
         return redirect()->route('users.index');
     }
 
@@ -47,7 +53,6 @@ class UserController extends Controller
      */
     public function edit(User $users)
     {
-
         return view('users.edit', compact('users'));
     }
 
@@ -56,7 +61,7 @@ class UserController extends Controller
      */
     public function update(Request $request,  User $users)
     {
-        $validated = $request->validate(['name=>required|string|max:40','password=>required|min:6|string','email=>required|unique:users','role=>string|max:15']);
+        $validated = $request->validate(['name' => 'required|string|max:40', 'password' => 'required|min:6|string', 'email' => 'required|unique:users', 'role' => 'string|max:15']);
         $validated['completed'] = $request->has('completed');
 
         $users->update($validated);
@@ -70,8 +75,5 @@ class UserController extends Controller
     {
         $users->delete();
         return redirect()->route('users.index');
-    }
-    public function login(){
-        
     }
 }
